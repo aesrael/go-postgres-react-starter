@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	controller "go-postgre-jwt-boilerplate/controller"
+	"go-postgre-jwt-boilerplate/server/middlewares"
 
 	"go-postgre-jwt-boilerplate/errors"
 
@@ -23,8 +24,7 @@ func setupRouter() *gin.Engine {
 	// gin.DisableConsoleColor()
 	router := gin.Default()
 	// Middlewares
-	// router.Use(middlewares.Connect)
-	// router.Use(middlewares.ErrorHandler)
+	router.Use(middlewares.ErrorHandler)
 
 	// Statics
 	// router.Static("/public", "./public")
@@ -45,7 +45,7 @@ func main() {
 	// 	}
 	// 	fmt.Println(title)
 	// }
-	// r := setupRouter()
-	// Listen and Serve in 0.0.0.0:8080
-	// r.Run(":8081")
+	r := setupRouter()
+	// Listen and Serve in 0.0.0.0:80801
+	r.Run(":8081")
 }
