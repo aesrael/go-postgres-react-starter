@@ -1,11 +1,9 @@
 package main
 
 import (
-	"fmt"
+	_ "database/sql"
 	controller "go-postgre-jwt-boilerplate/controller"
-	"go-postgre-jwt-boilerplate/server/middlewares"
-
-	"go-postgre-jwt-boilerplate/errors"
+	"go-postgre-jwt-boilerplate/middlewares"
 
 	"go-postgre-jwt-boilerplate/db"
 
@@ -16,7 +14,6 @@ import (
 
 func init() {
 	db.Connect()
-
 }
 
 func setupRouter() *gin.Engine {
@@ -30,21 +27,12 @@ func setupRouter() *gin.Engine {
 	// router.Static("/public", "./public")
 	// Ping test
 	router.GET("/ping", controller.Pong)
+	router.POST("/register", controller.Create)
+	router.POST("/login", controller.Login)
 	return router
 }
 
 func main() {
-	rows, err := db.DB.Query("SELECT * FROM users")
-	defer rows.Close()
-	errors.HandleErr(err)
-	fmt.Println(rows)
-	// for rows.Next() {
-	// 	var title string
-	// 	if err := rows.Scan(&title); err != nil {
-	// 		log.Fatal(err)
-	// 	}
-	// 	fmt.Println(title)
-	// }
 	r := setupRouter()
 	// Listen and Serve in 0.0.0.0:80801
 	r.Run(":8081")
