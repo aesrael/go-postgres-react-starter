@@ -1,13 +1,14 @@
 package errors
 
-import "log"
+import "github.com/gin-gonic/gin"
 
+// ValidationErrors Users input validation errros
 var ValidationErrors = []string{}
 
 //HandleErr //generic error handler, logs error and Os.Exit(1)
-func HandleErr(err error) error {
+func HandleErr(c *gin.Context, err error) error {
 	if err != nil {
-		log.Fatal(err)
+		c.Error(err)
 	}
 	return err
 }

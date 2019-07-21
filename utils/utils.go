@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"go-postgre-jwt-boilerplate/db"
+	"go-postgres-jwt-react-starter/db"
 	"regexp"
 )
 

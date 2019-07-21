@@ -1,4 +1,4 @@
-module go-postgre-jwt-boilerplate
+module go-postgres-jwt-react-starter
 
 go 1.12
 
