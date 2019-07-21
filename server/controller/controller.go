@@ -44,7 +44,7 @@ func Create(c *gin.Context) {
 	db.HashPassword(&user)
 	_, err := db.DB.Query(db.CreateUserQuery, user.Name, user.Password, user.Email)
 	errors.HandleErr(c, err)
-	c.JSON(http.StatusOK, gin.H{"success": true, "msg": "user created succesfully"})
+	c.JSON(http.StatusOK, gin.H{"success": true, "msg": "User created succesfully"})
 }
 
 // Session returns JSON of user info
