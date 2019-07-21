@@ -25,5 +25,4 @@ func Connect() {
 		log.Fatal("Error: Could not establish a connection with the database")
 	}
 	DB = db
-	CreateUsersTable()
 }
