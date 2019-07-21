@@ -30,13 +30,14 @@ func Create(c *gin.Context) {
 	var user db.Register
 	c.Bind(&user)
 	exists := checkUserExists(user)
-	if exists == true {
-		errors.ValidationErrors = append(errors.ValidationErrors, "email exists already exists")
-	}
-	utils.ValidateUser(user, errors.ValidationErrors)
 
-	if len(errors.ValidationErrors) > 0 {
-		c.JSON(http.StatusUnprocessableEntity, gin.H{"errors": errors.ValidationErrors})
+	valErr := utils.ValidateUser(user, errors.ValidationErrors)
+	if exists == true {
+		valErr = append(valErr, "email already exists")
+	}
+	fmt.Println(valErr)
+	if len(valErr) > 0 {
+		c.JSON(http.StatusUnprocessableEntity, gin.H{"success": false, "errors": valErr})
 		return
 	}
 	HashPassword(&user)
