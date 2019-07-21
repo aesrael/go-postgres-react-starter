@@ -1,0 +1,31 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.input {
+  width: 50vw;
+  margin: 20px;
+  height: 2rem;
+  font-size: 1.2em;
+  width: 300px;
+  border: 3px solid #d2ddec;
+  padding: 10px;
+  outline: 0;
+}
+.message{
+    font-size: 1.2em;
+    margin-top:10px;
+}
+button {
+  width: 150px;
+  height: 50px;
+  font-size: 1.2em;
+  border-radius: 5px;
+  cursor: pointer;
+  color: #fff;
+  background-color: #01506f;
+}
