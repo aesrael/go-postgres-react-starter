@@ -23,6 +23,8 @@ type Claims struct {
 	jwt.StandardClaims
 }
 
+var jwtKey = []byte("secret")
+
 //Create new user
 func Create(c *gin.Context) {
 	var user db.Register
@@ -43,9 +45,17 @@ func Create(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"success": true, "msg": "user created succesfully"})
 }
 
-func Login(c *gin.Context) {
-	var jwtKey = []byte("secret")
+func Session(c *gin.Context) {
+	user, isAuthenticated := authMiddleware(c)
+	if !isAuthenticated {
+		c.JSON(http.StatusUnauthorized, gin.H{"success": false, "msg": "unauthorized"})
+		return
+	}
 
+	c.JSON(http.StatusOK, gin.H{"success": true, "user": user})
+}
+
+func Login(c *gin.Context) {
 	var user db.Login
 	c.Bind(&user)
 
@@ -67,7 +77,7 @@ func Login(c *gin.Context) {
 
 		// Declare the expiration time of the token
 		// here, we have kept it as 5 minutes
-		expirationTime := time.Now().Add(5 * time.Hour)
+		expirationTime := time.Now().Add(5 * time.Second)
 		// Create the JWT claims, which includes the username and expiry time
 		claims := &Claims{
 
@@ -99,6 +109,45 @@ func HashPassword(user *db.Register) {
 	bytes, err := bcrypt.GenerateFromPassword([]byte(user.Password), 10)
 	errors.HandleErr(err)
 	user.Password = string(bytes)
+}
+
+func authMiddleware(c *gin.Context) (jwt.MapClaims, bool) {
+	// We can obtain the session token from the requests cookies, which come with every request
+	ck, err := c.Request.Cookie("token")
+	if err != nil {
+		if err == http.ErrNoCookie {
+			// If the cookie is not set, return an unauthorized status
+			c.JSON(http.StatusUnauthorized, gin.H{"success": false, "msg": "unauthorized"})
+			return nil, false
+		}
+		// For any other type of error, return a bad request status
+		errors.HandleErr(err)
+	}
+
+	// Get the JWT string from the cookie
+	tokenString := ck.Value
+
+	// Parse takes the token string and a function for looking up the key. The latter is especially
+	// useful if you use multiple keys for your application.  The standard is to use 'kid' in the
+	// head of the token to identify which key to use, but the parsed token (head and claims) is provided
+	// to the callback, providing flexibility.
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		// Don't forget to validate the alg is what you expect:
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
+		}
+
+		// hmacSampleSecret is a []byte containing your secret, e.g. []byte("my_secret_key")
+		return jwtKey, nil
+	})
+
+	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+		return claims, true
+	} else {
+		fmt.Println(err)
+		return nil, false
+	}
+	return nil, true
 }
 
 func CheckPasswordHash(password, hash string) bool {
