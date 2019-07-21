@@ -2,8 +2,8 @@ package main
 
 import (
 	_ "database/sql"
-	"go-postgres-jwt-react-starter/db"
-	"go-postgres-jwt-react-starter/router"
+	"go-postgres-jwt-react-starter/server/db"
+	"go-postgres-jwt-react-starter/server/router"
 
 	_ "github.com/lib/pq"
 )

@@ -3,7 +3,7 @@ package db
 import (
 	"database/sql"
 	"fmt"
-	"go-postgres-jwt-react-starter/config"
+	"go-postgres-jwt-react-starter/server/config"
 	"log"
 )
 

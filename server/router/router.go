@@ -1,8 +1,8 @@
 package router
 
 import (
-	"go-postgres-jwt-react-starter/controller"
-	"go-postgres-jwt-react-starter/middlewares"
+	"go-postgres-jwt-react-starter/server/controller"
+	"go-postgres-jwt-react-starter/server/middlewares"
 
 	"github.com/gin-gonic/gin"
 )
@@ -13,7 +13,9 @@ func SetupRouter() *gin.Engine {
 
 	// Middlewares
 	router.Use(middlewares.ErrorHandler)
+	router.Use(middlewares.CORSMiddleware())
 
+	// routes
 	router.GET("/ping", controller.Pong)
 	router.POST("/register", controller.Create)
 	router.POST("/login", controller.Login)

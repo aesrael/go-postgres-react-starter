@@ -2,9 +2,9 @@ package controller
 
 import (
 	"fmt"
-	"go-postgres-jwt-react-starter/db"
-	"go-postgres-jwt-react-starter/errors"
-	"go-postgres-jwt-react-starter/utils"
+	"go-postgres-jwt-react-starter/server/db"
+	"go-postgres-jwt-react-starter/server/errors"
+	"go-postgres-jwt-react-starter/server/utils"
 	"net/http"
 	"time"
 
