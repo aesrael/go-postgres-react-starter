@@ -7,7 +7,7 @@ import (
 
 	"go-postgre-jwt-boilerplate/db"
 
-	_ "github.com/dgrijalva/jwt-go"
+	// _ "github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
 )
@@ -29,6 +29,7 @@ func setupRouter() *gin.Engine {
 	router.GET("/ping", controller.Pong)
 	router.POST("/register", controller.Create)
 	router.POST("/login", controller.Login)
+	router.GET("/session", controller.Session)
 	return router
 }
 

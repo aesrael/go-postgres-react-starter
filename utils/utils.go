@@ -12,13 +12,16 @@ const (
 func ValidateUser(user db.Register, err []string) []string {
 	emailCheck := regexp.MustCompile(emailRegex).MatchString(user.Email)
 	if emailCheck != true {
-		err[0] = "Invalid email"
+		// err[0] = "Invalid email"
+		err = append(err, "Invalid email")
 	}
+
 	if len(user.Password) < 4 {
-		err[1] = "Invalid password"
+		// err[1] = "Invalid password"
+		err = append(err, "Invalid password, Password should be more than 4 characters")
 	}
 	if len(user.Name) < 1 {
-		err[2] = "Invalid name"
+		err = append(err, "Invalid name, please enter a name")
 	}
 
 	return err
