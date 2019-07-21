@@ -1,0 +1,35 @@
+{
+  "name": "go-auth",
+  "version": "0.1.0",
+  "description": "authentication with react and go",
+  "private": true,
+  "dependencies": {
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-router-dom": "^5.0.1",
+    "react-scripts": "1.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IsraelAdura/go-postgres-jwt-react-starter.git"
+  },
+  "keywords": [
+    "go",
+    "jwt",
+    "react",
+    "react-router",
+    "postgres"
+  ],
+  "author": "israeladura",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/IsraelAdura/go-postgres-jwt-react-starter"
+  },
+  "homepage": "https://github.com/IsraelAdura/go-postgres-jwt-react-starter#readme"
+}
