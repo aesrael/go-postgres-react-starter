@@ -1,6 +1,6 @@
 package db
 
-//CreateUsersTable //
+//CreateUsersTable //creates users table
 func CreateUsersTable() {
 	DB.Query(`
 	CREATE TABLE IF NOT EXISTS users(
