@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { apiURl } from '../api'
+import { deleteCookie } from '../utils'
 
-
-const Login = ({ history }) => {
+const Session = ({ history }) => {
   const [state, setState] = useState({
     isFetching: false,
     message: null,
@@ -16,7 +16,7 @@ const Login = ({ history }) => {
     try {
       const res = await fetch(`${apiURl}/session`, {
         method: 'GET',
-        credentials:"same-origin",
+        credentials: 'include',
         headers: {
           Accept: 'application/json',
           Authorization: document.cookie,
@@ -33,6 +33,11 @@ const Login = ({ history }) => {
     }
   }
 
+  const handleLogout = () => {
+    deleteCookie('token')
+    history.push('/login')
+  }
+
   useEffect(() => {
     if (history.location.state) {
       return setState({ ...state, user: { ...history.location.state } })
@@ -42,22 +47,22 @@ const Login = ({ history }) => {
 
   return (
     <div className="wrapper">
-      <h1>Welcome {user && user.name}</h1>
+      <h1>Welcome, {user && user.name}</h1>
       {user && user.email}
       <div className="message">
         {isFetching ? 'fetching details..' : message}
       </div>
 
       <button
+        style={{ height: '30px' }}
         onClick={() => {
-          localStorage.clear()
-          history.push('/login')
+         handleLogout()
         }}
       >
-        Logout?
+        logout
       </button>
     </div>
   )
 }
 
-export default Login
+export default Session

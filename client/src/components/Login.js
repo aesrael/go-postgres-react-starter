@@ -1,11 +1,6 @@
 import React, { useState } from 'react'
 import { apiURl } from '../api'
-
-const createCookie = (cookieName, cookieValue, hourToExpire) => {
-  const date = new Date()
-  date.setTime(date.getTime() + hourToExpire * 60 * 60 * 1000)
-  document.cookie = `${cookieName}' = '${cookieValue}'; expires = ' ${date.toGMTString()}`
-}
+import { createCookie } from '../utils'
 
 const Login = ({ history }) => {
   const [state, setState] = useState({
@@ -24,7 +19,7 @@ const Login = ({ history }) => {
 
   const handleSubmit = async () => {
     setState({ ...state, isSubmitting: true })
-    console.log(isSubmitting)
+
     const { email, password } = state
     try {
       const res = await fetch(`${apiURl}/login`, {
@@ -47,7 +42,9 @@ const Login = ({ history }) => {
           isSubmitting: false,
         })
       }
-      createCookie('token', token, 0.4)
+      // expire in 30 minutes(same time as the cookie is invalidated on the backend)
+      createCookie('token', token, 0.5)
+
       history.push({ pathname: '/session', state: user })
     } catch (e) {
       setState({ ...state, message: e.toString(), isSubmitting: false })
