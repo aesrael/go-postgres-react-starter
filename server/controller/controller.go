@@ -82,8 +82,9 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	//expiration time of the token ->10 mins
-	expirationTime := time.Now().Add(10 * time.Minute)
+	//expiration time of the token ->30 mins
+	expirationTime := time.Now().Add(30 * time.Minute)
+
 	// Create the JWT claims, which includes the User struct and expiry time
 	claims := &Claims{
 
