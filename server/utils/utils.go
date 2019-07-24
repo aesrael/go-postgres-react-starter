@@ -1,8 +1,9 @@
 package utils
 
 import (
-	"go-postgres-jwt-react-starter/server/db"
 	"regexp"
+
+	"github.com/go-postgres-jwt-react-starter/server/db"
 )
 
 const (

@@ -3,11 +3,12 @@ package controller
 import (
 	"database/sql"
 	"fmt"
-	"go-postgres-jwt-react-starter/server/db"
-	"go-postgres-jwt-react-starter/server/errors"
-	"go-postgres-jwt-react-starter/server/utils"
 	"net/http"
 	"time"
+
+	"github.com/go-postgres-jwt-react-starter/server/db"
+	"github.com/go-postgres-jwt-react-starter/server/errors"
+	"github.com/go-postgres-jwt-react-starter/server/utils"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
