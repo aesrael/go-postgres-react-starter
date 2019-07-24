@@ -38,6 +38,30 @@ To start the react app navigate to the client directory
 > yarn install
 > yarn start
 ```
+### Endpoints
+
+* /session
+
+* /register
+     
+```js
+       { name String,
+         email, String,
+         password: String
+       }
+```
+* /login
+```js
+       { email, String,
+         password: String
+       }
+```
+## Routes
+* /login
+
+* /register
+
+* /session
 
 
 ## Contributing
