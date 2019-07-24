@@ -40,9 +40,9 @@ To start the react app navigate to the client directory
 ```
 ### Endpoints
 
-* /session
+* /session [GET]
 
-* /register
+* /register [POST]
      
 ```js
        { name String,
@@ -50,7 +50,7 @@ To start the react app navigate to the client directory
          password: String
        }
 ```
-* /login
+* /login [POST]
 ```js
        { email, String,
          password: String
