@@ -16,11 +16,11 @@ Download and install [postgres](https://www.postgresql.org/download/)
 - [Setup postgres- windows](https://www.robinwieruch.de/postgres-sql-windows-setup/): Setting up postgres on windows
 
 ## Usage
-Clone this directory
+Clone this repository
 
-Use the queries in the [server/db/.postgres](./server/db/.postgres) file to setup the database.
+Use the queries in the [server/db/.psql](./server/db/.postgres) file to setup the database.
 
-Enter the DB creds in [server/config/](./server/config/config.go)  file 
+Enter the DB creds in the [server/config/](./server/config/config.go) file 
 
 Navigate to the server directory
 
@@ -46,14 +46,14 @@ To start the react app navigate to the client directory
      
 ```js
        { name String,
-         email, String,
-         password: String
+         email String,
+         password String
        }
 ```
 * /login [POST]
 ```js
-       { email, String,
-         password: String
+       { email String,
+         password String
        }
 ```
 ## Routes
