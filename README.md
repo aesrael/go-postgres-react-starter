@@ -56,12 +56,30 @@ To start the react app navigate to the client directory
          password String
        }
 ```
+
+* /createReset [POST]
+```js
+       { email String
+       }
+```
+* /resetPassword [POST]
+```js
+       { id Int,
+          password String,
+          confirm_password String
+       }
+```
+
 ## Routes
 * /login
 
 * /register
 
 * /session
+
+* /createReset
+
+* /resetPassword
 
 
 ## Contributing
