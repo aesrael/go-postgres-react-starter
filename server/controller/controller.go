@@ -46,7 +46,10 @@ func ResetPassword(c *gin.Context){
 	var resetPassword db.ResetPassword
 	c.Bind(&resetPassword)
 	if ok,errStr := utils.ValidatePasswordReset(resetPassword); ok{
-
+		password := db.CreateHashedPassword(resetPassword.Password)
+		_,err := db.DB.Query(db.UpdateUserPasswordQuery,resetPassword.ID,password)
+		errors.HandleErr(c, err)
+		c.JSON(http.StatusOK,gin.H{"success":true, "msg": "User password reset successfully"})
 	} else{
 		c.JSON(http.StatusOK, gin.H{"success":false,"errors":errStr})
 	}
