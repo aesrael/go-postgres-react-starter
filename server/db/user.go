@@ -13,14 +13,25 @@ type Register struct {
 	Email    string `json:"email"`
 }
 
+type ResetPassword struct {
+	Email string `json:"email"`
+	Password string `json:"password"`
+	ConfirmPassword string `json:"confirm_password"`
+}
+
 // Login struct
 type Login struct {
 	Password string `json:"password"`
 	Email    string `json:"email"`
 }
 
+type CreateReset struct{
+	Email string `json:"email"`
+}
+
 //User struct
 type User struct {
+	//ID string
 	Password  string `json:"password"`
 	Email     string `json:"email"`
 	Name      string `json:"name"`
