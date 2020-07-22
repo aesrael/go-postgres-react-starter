@@ -3,6 +3,7 @@ package controller
 import (
 	"database/sql"
 	"fmt"
+	"github.com/go-postgres-jwt-react-starter/server/config"
 	"net/http"
 	"time"
 
@@ -26,6 +27,32 @@ type Claims struct {
 func Pong(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"ping": "pong"})
 }
+
+
+//Initiate Password reset email with reset url
+func InitiatePasswordReset(c *gin.Context){
+	var createReset db.CreateReset
+	c.Bind(&createReset)
+	if id,ok := checkAndRetrieveUserIDViaEmail(createReset); ok{
+		link := fmt.Sprintf("%s/reset/%d",config.CLIENT_URL,id)
+		//Reset link is returned in json response for testing purposes since no email service is integrated
+		c.JSON(http.StatusOK, gin.H{"success": true, "msg": "Successfully sent reset mail to " + createReset.Email, "link":link})
+	} else{
+		c.JSON(http.StatusNotFound,gin.H{"success": false, "errors":"No user found for email: " + createReset.Email})
+	}
+}
+
+func ResetPassword(c *gin.Context){
+	var resetPassword db.ResetPassword
+	c.Bind(&resetPassword)
+	if ok,errStr := utils.ValidatePasswordReset(resetPassword); ok{
+
+	} else{
+		c.JSON(http.StatusOK, gin.H{"success":false,"errors":errStr})
+	}
+
+}
+
 
 //Create new user
 func Create(c *gin.Context) {
@@ -122,4 +149,21 @@ func checkUserExists(user db.Register) bool {
 		return false
 	}
 	return true
+}
+
+//Returns -1 as ID if the user doesnt exist in the table
+func checkAndRetrieveUserIDViaEmail(createReset db.CreateReset) (int,bool){
+	rows, err := db.DB.Query(db.CheckUserExists,createReset.Email)
+	if err != nil{
+		return -1,false
+	}
+	if !rows.Next(){
+		return -1,false
+	}
+	var id int
+	err = rows.Scan(&id)
+	if err != nil{
+		return -1,false
+	}
+	return id,true
 }

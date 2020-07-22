@@ -25,3 +25,13 @@ func ValidateUser(user db.Register, err []string) []string {
 
 	return err
 }
+
+func ValidatePasswordReset(resetPassword db.ResetPassword)(bool,string){
+	if len(resetPassword.Password) < 4{
+		return false,"Invalid password, password should be more than 4 characters"
+	}
+	if resetPassword.Password != resetPassword.ConfirmPassword{
+		return false,"Password reset failed, passwords must match"
+	}
+	return true,""
+}

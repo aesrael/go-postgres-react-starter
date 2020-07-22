@@ -1,5 +1,5 @@
 # config
 *.env
-/config_var.env
+/config/config_var.env
 
 
