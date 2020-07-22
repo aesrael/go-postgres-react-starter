@@ -1,9 +1,9 @@
 package config
 
 const (
-	DB_USER     = "davidemi"
+	DB_USER     = "israel"
 	DB_PASSWORD = "secret"
 	DB_NAME     = "goauth"
-	CLIENT_URL  = "http://localhost:5431"
+	CLIENT_URL  = "http://localhost:3000"
 )
 
