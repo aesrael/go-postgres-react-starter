@@ -20,5 +20,7 @@ func SetupRouter() *gin.Engine {
 	router.POST("/register", controller.Create)
 	router.POST("/login", controller.Login)
 	router.GET("/session", controller.Session)
+	router.POST("/createReset", controller.InitiatePasswordReset)
+	router.POST("/resetPassword",controller.ResetPassword)
 	return router
 }
