@@ -1,3 +1,5 @@
+[![Go Report Card](https://goreportcard.com/badge/github.com/hyperxcode/go-postgres-jwt-react-starter)](https://goreportcard.com/report/github.com/hyperxcode/go-postgres-jwt-react-starter)
+
 # GO-React starter
 ![](./assets/logo.png)
 
