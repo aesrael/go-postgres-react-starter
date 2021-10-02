@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { apiURl } from '../api'
+import { Endpoints } from '../api'
 
 const Register = ({ history }) => {
   const [state, setState] = useState({
@@ -13,16 +13,16 @@ const Register = ({ history }) => {
 
   const { email, password, name, message, isSubmitting, errors } = state
 
-  const handleChange = async e => {
+  const handleChange = async (e) => {
     await setState({ ...state, [e.target.name]: e.target.value })
   }
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     setState({ ...state, isSubmitting: true })
 
     const { email, password, name } = state
     try {
-      const res = await fetch(`${apiURl}/register`, {
+      const res = await fetch(Endpoints.register, {
         method: 'POST',
         body: JSON.stringify({
           email,
@@ -32,7 +32,7 @@ const Register = ({ history }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-      }).then(res => res.json())
+      }).then((res) => res.json())
       const { success, msg, errors } = res
 
       if (!success) {
@@ -54,7 +54,7 @@ const Register = ({ history }) => {
         placeholder="Name"
         value={name}
         name="name"
-        onChange={e => {
+        onChange={(e) => {
           handleChange(e)
         }}
       />
@@ -64,7 +64,7 @@ const Register = ({ history }) => {
         placeholder="Email"
         value={email}
         name="email"
-        onChange={e => {
+        onChange={(e) => {
           handleChange(e)
         }}
       />
@@ -74,7 +74,7 @@ const Register = ({ history }) => {
         placeholder="Password"
         value={password}
         name="password"
-        onChange={e => {
+        onChange={(e) => {
           handleChange(e)
         }}
       />

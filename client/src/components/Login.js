@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { apiURl } from '../api'
+import { Endpoints } from '../api'
 import { createCookie } from '../utils'
 
 const Login = ({ history }) => {
@@ -12,7 +12,7 @@ const Login = ({ history }) => {
 
   const { email, password, isSubmitting, message } = state
 
-  const handleChange = async e => {
+  const handleChange = async (e) => {
     const { name, value } = e.target
     await setState({ ...state, [name]: value })
   }
@@ -22,7 +22,7 @@ const Login = ({ history }) => {
 
     const { email, password } = state
     try {
-      const res = await fetch(`${apiURl}/login`, {
+      const res = await fetch(Endpoints.login, {
         method: 'POST',
         body: JSON.stringify({
           email,
@@ -31,9 +31,9 @@ const Login = ({ history }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-      }).then(res => res.json())
+      })
 
-      const { token, success, msg, user } = res
+      const { token, success, msg, user } = await res.json()
 
       if (!success) {
         return setState({
@@ -60,7 +60,7 @@ const Login = ({ history }) => {
         placeholder="email"
         value={email}
         name="email"
-        onChange={e => {
+        onChange={(e) => {
           handleChange(e)
         }}
       />
@@ -71,7 +71,7 @@ const Login = ({ history }) => {
         placeholder="password"
         value={password}
         name="password"
-        onChange={e => {
+        onChange={(e) => {
           handleChange(e)
         }}
       />

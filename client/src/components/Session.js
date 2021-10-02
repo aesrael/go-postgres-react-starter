@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { apiURl } from '../api'
+import { Endpoints } from '../api'
 import { deleteCookie } from '../utils'
 
 const Session = ({ history }) => {
@@ -14,16 +14,16 @@ const Session = ({ history }) => {
   const getUserInfo = async () => {
     setState({ ...state, isFetching: true, message: 'fetching details...' })
     try {
-      const res = await fetch(`${apiURl}/session`, {
+      const res = await fetch(Endpoints.session, {
         method: 'GET',
         credentials: 'include',
         headers: {
           Accept: 'application/json',
           Authorization: document.cookie,
         },
-      }).then(res => res.json())
+      })
 
-      const { success, user } = res
+      const { success, user } = await res.json()
       if (!success) {
         history.push('/login')
       }
@@ -56,7 +56,7 @@ const Session = ({ history }) => {
       <button
         style={{ height: '30px' }}
         onClick={() => {
-         handleLogout()
+          handleLogout()
         }}
       >
         logout
