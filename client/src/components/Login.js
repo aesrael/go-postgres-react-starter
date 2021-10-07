@@ -56,13 +56,14 @@ const Login = ({ history }) => {
       <h1>Login</h1>
       <input
         className="input"
-        type="text"
+        type="email"
         placeholder="email"
         value={email}
         name="email"
         onChange={(e) => {
           handleChange(e)
         }}
+        required
       />
 
       <input
@@ -74,6 +75,7 @@ const Login = ({ history }) => {
         onChange={(e) => {
           handleChange(e)
         }}
+        required
       />
 
       <button disabled={isSubmitting} onClick={() => handleSubmit()}>

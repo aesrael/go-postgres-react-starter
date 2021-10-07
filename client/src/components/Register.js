@@ -32,8 +32,8 @@ const Register = ({ history }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-      }).then((res) => res.json())
-      const { success, msg, errors } = res
+      })
+      const { success, msg, errors } = await res.json()
 
       if (!success) {
         return setState({ ...state, message: msg, errors, isSubmitting: false })
@@ -57,16 +57,18 @@ const Register = ({ history }) => {
         onChange={(e) => {
           handleChange(e)
         }}
+        required
       />
       <input
         className="input"
-        type="text"
+        type="email"
         placeholder="Email"
         value={email}
         name="email"
         onChange={(e) => {
           handleChange(e)
         }}
+        required
       />
       <input
         className="input"
@@ -77,6 +79,7 @@ const Register = ({ history }) => {
         onChange={(e) => {
           handleChange(e)
         }}
+        required
       />
 
       <button disabled={isSubmitting} onClick={() => handleSubmit()}>
