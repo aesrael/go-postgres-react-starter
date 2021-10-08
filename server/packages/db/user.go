@@ -40,7 +40,7 @@ func (user *User) HashPassword() error {
 }
 
 func (user *User) UserExists(dbConn *sql.DB) bool {
-	rows, err := dbConn.Query(GetUserQuery, user.Email)
+	rows, err := dbConn.Query(GetUserByEmailQuery, user.Email)
 	if err != nil || !rows.Next() {
 		return false
 	}

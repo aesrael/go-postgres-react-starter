@@ -1,8 +1,8 @@
 package config
 
 import (
-	"fmt"
 	"os"
+	"path/filepath"
 
 	"github.com/apex/log"
 	"github.com/joho/godotenv"
@@ -11,21 +11,20 @@ import (
 type ConfigType map[string]string
 
 var Config = ConfigType{
-	"DB_USER":       "aesrael",
+	"DB_USER":       "",
 	"DB_PASSWORD":   "",
-	"DB_NAME":       "goapp",
+	"DB_NAME":       "",
 	"CLIENT_URL":    "",
 	"SERVER_PORT":   "",
-	"RUN_MIGRATION": "true",
+	"JWT_KEY":       "",
+	"RUN_MIGRATION": "",
 }
 
 func InitConfig() {
-	if err := godotenv.Load(); err != nil {
+	envFilePath, _ := filepath.Abs("../.env")
+	if err := godotenv.Load(envFilePath); err != nil {
 		log.WithField("reason", err.Error()).Fatal("No .env file found")
 	}
-
-	a, err := os.LookupEnv("DB_USER")
-	fmt.Print(a, err)
 
 	required := []string{
 		"DB_USER",
@@ -33,6 +32,7 @@ func InitConfig() {
 		"DB_NAME",
 		"CLIENT_URL",
 		"SERVER_PORT",
+		"RUN_MIGRATION",
 	}
 
 	for _, env := range required {

@@ -10,19 +10,16 @@ import (
 
 func AuthorizeSession(c *fiber.Ctx) error {
 	tokenStr := c.Get("Authorization")
-
 	if tokenStr == "" {
-		c.SendStatus(http.StatusUnauthorized)
-		return nil
+		return c.SendStatus(http.StatusUnauthorized)
 	}
 
-	_, err := jwt.Parse(tokenStr, func(token *jwt.Token) (interface{}, error) {
+	claims, err := jwt.Parse(tokenStr, func(token *jwt.Token) (interface{}, error) {
 		return []byte(config.Config["JWT_KEY"]), nil
 	})
-
+	c.Locals("user", claims)
 	if err != nil {
-		c.Status(http.StatusUnauthorized).SendString(err.Error())
-		return err
+		return c.Status(http.StatusUnauthorized).SendString(err.Error())
 	}
 	return c.Next()
 }
