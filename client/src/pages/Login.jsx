@@ -1,13 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState } from "react"
 
-import { Endpoints } from '../api'
-import Errors from '../components/Errors'
-import { createCookie } from '../utils'
+import { Endpoints } from "../api"
+import Errors from "../components/Errors"
+import { createCookie } from "../utils"
 
 export default ({ history }) => {
   const [login, setLogin] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   })
 
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -24,13 +24,13 @@ export default ({ history }) => {
     try {
       setIsSubmitting(true)
       const res = await fetch(Endpoints.login, {
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify({
           email,
           password,
         }),
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       })
 
@@ -39,8 +39,8 @@ export default ({ history }) => {
         // creating a cookie expire in 30 minutes(same time as the token is invalidated on the backend)
         // ordinarily the setcookie from the server should suffice, however it has to be created here manually to bypass browsers
         // restriction on cross-site/non secure cookies on localhost.
-        createCookie('token', token, 0.5)
-        history.push({ pathname: '/session', state: user })
+        createCookie("token", token, 0.5)
+        history.push({ pathname: "/session", state: user })
       }
       setErrors(errors)
     } catch (e) {
@@ -76,10 +76,10 @@ export default ({ history }) => {
         />
 
         <button disabled={isSubmitting} type="submit">
-          {isSubmitting ? '.....' : 'login'}
+          {isSubmitting ? "....." : "login"}
         </button>
         <br />
-        <a href="/register">{'create account'}</a>
+        <a href="/register">{"create account"}</a>
         <br />
         <Errors errors={errors} />
       </div>
