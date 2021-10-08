@@ -16,10 +16,11 @@
   padding: 10px;
   outline: 0;
 }
-.message{
-    font-size: 1.2em;
-    margin-top:10px;
+
+.errors {
+  color: red;
 }
+
 button {
   width: 150px;
   height: 50px;
