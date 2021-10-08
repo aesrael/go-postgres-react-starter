@@ -1,5 +1,5 @@
 # GO-React starter
-![](./assets/logo.png)
+![](.github/logo.png)
 
 This is a basic example of a go web server with a react frontend.
 
