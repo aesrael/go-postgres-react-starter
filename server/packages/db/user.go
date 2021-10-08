@@ -1,17 +1,10 @@
 package db
 
 import (
-	"log"
+	"database/sql"
 
 	"golang.org/x/crypto/bcrypt"
 )
-
-// Register struct
-type Register struct {
-	Name     string `json:"name"`
-	Password string `json:"password"`
-	Email    string `json:"email"`
-}
 
 type ResetPassword struct {
 	ID              int    `json:"id"`
@@ -19,10 +12,9 @@ type ResetPassword struct {
 	ConfirmPassword string `json:"confirm_password"`
 }
 
-// Login struct
 type Login struct {
-	Password string `json:"password"`
-	Email    string `json:"email"`
+	Password string `json:"password,omitempty"`
+	Email    string `json:"email,omitempty"`
 }
 
 type CreateReset struct {
@@ -30,32 +22,28 @@ type CreateReset struct {
 }
 
 type User struct {
-	//ID string
-	Password  string `json:"password"`
-	Email     string `json:"email"`
-	Name      string `json:"name"`
-	CreatedAt string `json:"created_at"`
-	UpdatedAt string `json:"updated_at"`
+	ID        string `json:"id,omitempty"`
+	Password  string `json:"password,omitempty"`
+	Email     string `json:"email,omitempty"`
+	Name      string `json:"name,omitempty"`
+	CreatedAt string `json:"created_at,omitempty"`
+	UpdatedAt string `json:"updated_at,omitempty"`
 }
 
-func HashPassword(user *Register) {
+func (user *User) HashPassword() error {
 	bytes, err := bcrypt.GenerateFromPassword([]byte(user.Password), 10)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	user.Password = string(bytes)
+	return nil
 }
 
-func CreateHashedPassword(password string) string {
-	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 10)
-	if err != nil {
-		log.Fatal(err)
+func (user *User) UserExists(dbConn *sql.DB) bool {
+	rows, err := dbConn.Query(GetUserQuery, user.Email)
+	if err != nil || !rows.Next() {
+		return false
 	}
-	return string(bytes)
-}
 
-//CheckPasswordHash compares hash with passwor
-func CheckPasswordHash(password, hash string) bool {
-	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
-	return err == nil
+	return true
 }

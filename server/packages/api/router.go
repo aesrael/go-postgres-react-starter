@@ -38,9 +38,6 @@ func httpServer(db *sql.DB) *fiber.App {
 	api.Post("/login", WithDB(controller.Login, db))
 	api.Post("/register", WithDB(controller.CreateUser, db))
 
-	api.Post("/createReset", WithDB(controller.InitiatePasswordReset, db))
-	api.Post("/resetPassword", WithDB(controller.ResetPassword, db))
-
 	// authed routes
 	api.Get("/session", middleware.AuthorizeSession, WithDB(controller.Session, db))
 

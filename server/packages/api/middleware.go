@@ -1,4 +1,4 @@
-package middleware
+package api
 
 import (
 	"goapp/packages/config"

@@ -5,5 +5,6 @@ import (
 )
 
 func main() {
+	// config.InitConfig()
 	api.StartServer()
 }
