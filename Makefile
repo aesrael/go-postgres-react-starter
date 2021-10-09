@@ -3,7 +3,7 @@ build-go:
 	cd ./server && make build
 
 run: build-go
-	cd server/cmd && ./main & cd ../ui/ && yarn && yarn start
+	cd server/cmd && ./main && cd ../../ui/ && yarn && yarn start
 
 # Build images and run
 docker-build:

@@ -13,31 +13,28 @@ Download and install [golang](https://golang.org)
 
 Download and install [postgres](https://www.postgresql.org/download/)
 
-setup your postgres database, enter your config secrets in the [.env](./server/.env)
+Setup your postgres database, env secrets can be changed in the [.env](./server/.env) file
 
 - [A complete guide to PostgreSQL](https://prabhupant.medium.com/a-complete-guide-to-postgresql-e4d1cefb9866)
 
 - [Installing PostgreSQL for Mac, Linux, and Windows](https://medium.com/@dan.chiniara/installing-postgresql-for-windows-7ec8145698e3)
 
-```bash
-make build-go
-```
-
-This will start the go server.
-
-To start the react app navigate to the client directory
+Ensure you have `make` installed.
 
 ```bash
-make build-go
+make run
 ```
+
+This will start the go server & the react frontend.
+
 ### Using docker
-using docker compose 
+Ensure you have `docker` installed
 
 ```bash
-docker-compose build
-docker-compose up
+make docker-build
+make docker-run
 ```
-
+Server is live on `:8081` and UI is on `:3000`
 
 ## Endpoints
 | endpoint      | method | body                                           | description       |
@@ -50,7 +47,6 @@ docker-compose up
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
