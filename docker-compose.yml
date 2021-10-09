@@ -11,13 +11,11 @@ services:
     restart: unless-stopped
     depends_on:
       - db
-      # go-postgres-jwt-react-starter-postgres-1
     environment:
       POSTGRES_SERVER_HOST: db
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_DB: ${POSTGRES_DB}
-    networks:
-      - app
+
   ui:
     build:
       context: ./ui
@@ -25,15 +23,9 @@ services:
     ports:
       - '3000:3000'
     restart: unless-stopped
-    networks:
-      - app
 
   db:
     image: postgres:11.2-alpine
     restart: unless-stopped
     ports:
       - '5432:5432'
-    networks:
-      - app
-networks:
-  app:
