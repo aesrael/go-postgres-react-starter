@@ -8,16 +8,28 @@ import (
 	"github.com/joho/godotenv"
 )
 
+const (
+	POSTGRES_USER        = "POSTGRES_USER"
+	POSTGRES_PASSWORD    = "POSTGRES_PASSWORD"
+	POSTGRES_DB          = "POSTGRES_DB"
+	CLIENT_URL           = "CLIENT_URL"
+	SERVER_PORT          = "SERVER_PORT"
+	JWT_KEY              = "JWT_KEY"
+	RUN_MIGRATION        = "RUN_MIGRATION"
+	POSTGRES_SERVER_HOST = "POSTGRES_SERVER_HOST"
+)
+
 type ConfigType map[string]string
 
 var Config = ConfigType{
-	"DB_USER":       "",
-	"DB_PASSWORD":   "",
-	"DB_NAME":       "",
-	"CLIENT_URL":    "",
-	"SERVER_PORT":   "",
-	"JWT_KEY":       "",
-	"RUN_MIGRATION": "",
+	POSTGRES_USER:        "",
+	POSTGRES_PASSWORD:    "",
+	POSTGRES_DB:          "",
+	CLIENT_URL:           "",
+	SERVER_PORT:          "",
+	JWT_KEY:              "",
+	RUN_MIGRATION:        "",
+	POSTGRES_SERVER_HOST: "localhost",
 }
 
 func InitConfig() {
@@ -26,23 +38,27 @@ func InitConfig() {
 		log.WithField("reason", err.Error()).Fatal("No .env file found")
 	}
 
-	required := []string{
-		"DB_USER",
-		"DB_PASSWORD",
-		"DB_NAME",
-		"CLIENT_URL",
-		"SERVER_PORT",
-		"RUN_MIGRATION",
+	required := map[string]bool{
+		POSTGRES_USER:     true,
+		POSTGRES_PASSWORD: true,
+		POSTGRES_DB:       true,
+		CLIENT_URL:        true,
+		SERVER_PORT:       true,
+		RUN_MIGRATION:     true,
 	}
 
-	for _, env := range required {
-		envVal, exists := os.LookupEnv(env)
+	for key := range Config {
+		envVal, exists := os.LookupEnv(key)
 		if !exists {
-			log.Fatal(env + " not found in env")
+			if required[key] {
+				log.Fatal(key + " not found in env")
+			}
+			continue
 		}
-		if _, ok := Config[env]; ok {
-			Config[env] = envVal
+		if _, ok := Config[key]; ok {
+			Config[key] = envVal
 		}
 	}
+
 	log.Info("All config & secrets set")
 }

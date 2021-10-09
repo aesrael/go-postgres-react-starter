@@ -23,7 +23,7 @@ func httpServer(db *sql.DB) *fiber.App {
 
 	api := app.Group("/api")
 	api.Use(cors.New(cors.Config{
-		AllowOrigins:     config.Config["CLIENT_URL"],
+		AllowOrigins:     config.Config[config.CLIENT_URL],
 		AllowCredentials: true,
 		AllowHeaders:     "Content-Type, Content-Length, Accept-Encoding, Authorization, accept, origin",
 		AllowMethods:     "POST, OPTIONS, GET, PUT",

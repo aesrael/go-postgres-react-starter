@@ -13,12 +13,13 @@ import (
 )
 
 func ConnectDB() (*sql.DB, error) {
-	user := config.Config["DB_USER"]
-	database := config.Config["DB_NAME"]
+	user := config.Config[config.POSTGRES_USER]
+	database := config.Config[config.POSTGRES_DB]
+	host := config.Config[config.POSTGRES_SERVER_HOST]
 
-	dbinfo := fmt.Sprintf("user=%s dbname=%s  sslmode=disable", user, database)
+	connString := fmt.Sprintf("postgresql://%s@%s:5432/%s?sslmode=disable", user, host, database)
 
-	db, _ := sql.Open("postgres", dbinfo)
+	db, _ := sql.Open("postgres", connString)
 	if err := db.Ping(); err != nil {
 		return nil, err
 	}

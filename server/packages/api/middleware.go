@@ -15,7 +15,7 @@ func AuthorizeSession(c *fiber.Ctx) error {
 	}
 
 	claims, err := jwt.Parse(tokenStr, func(token *jwt.Token) (interface{}, error) {
-		return []byte(config.Config["JWT_KEY"]), nil
+		return []byte(config.Config[config.JWT_KEY]), nil
 	})
 	c.Locals("user", claims)
 	if err != nil {

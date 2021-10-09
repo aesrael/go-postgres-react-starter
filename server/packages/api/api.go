@@ -14,9 +14,9 @@ func StartServer() {
 	}
 	defer conn.Close()
 
-	runMigration := config.Config["RUN_MIGRATION"]
-	dbName := config.Config["DB_NAME"]
-	port := config.Config["SERVER_PORT"]
+	runMigration := config.Config[config.RUN_MIGRATION]
+	dbName := config.Config[config.POSTGRES_DB]
+	port := config.Config[config.SERVER_PORT]
 
 	if runMigration == "true" && conn != nil {
 		if err := db.Migrate(conn, dbName); err != nil {
