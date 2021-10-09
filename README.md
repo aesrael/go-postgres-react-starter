@@ -20,9 +20,7 @@ setup your postgres database, enter your config secrets in the [.env](./server/.
 - [Installing PostgreSQL for Mac, Linux, and Windows](https://medium.com/@dan.chiniara/installing-postgresql-for-windows-7ec8145698e3)
 
 ```bash
-cd server
-go mod download
-go run main.go
+make build-go
 ```
 
 This will start the go server.
@@ -30,9 +28,7 @@ This will start the go server.
 To start the react app navigate to the client directory
 
 ```bash
-cd client
-yarn install
-yarn start
+make build-go
 ```
 ### Using docker
 using docker compose 

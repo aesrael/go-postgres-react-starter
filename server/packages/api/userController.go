@@ -96,7 +96,7 @@ func Login(c *fiber.Ctx, dbConn *sql.DB) error {
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	var jwtKey = []byte(config.Config["JWT_KEY"])
+	var jwtKey = []byte(config.Config[config.JWT_KEY])
 	tokenValue, err := token.SignedString(jwtKey)
 
 	if err != nil {
@@ -107,7 +107,7 @@ func Login(c *fiber.Ctx, dbConn *sql.DB) error {
 		Name:     "token",
 		Value:    tokenValue,
 		Expires:  expirationTime,
-		Domain:   config.Config["CLIENT_URL"],
+		Domain:   config.Config[config.CLIENT_URL],
 		HTTPOnly: true,
 	})
 
