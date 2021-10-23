@@ -3,11 +3,12 @@
     "browser": true,
     "es2021": true
   },
-  "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:prettier/recommended"
-  ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -17,10 +18,10 @@
   },
   "plugins": ["react"],
   "rules": {
-    "indent": ["error", 4],
     "linebreak-style": ["error", "unix"],
     "quotes": ["error", "single"],
     "semi": ["error", "never"],
-    "comma-dange": ["error", "always"]
+    "comma-spacing": "error",
+    "comma-dangle": ["error", "always"]
   }
 }
