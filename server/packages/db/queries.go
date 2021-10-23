@@ -7,4 +7,5 @@ const (
 	UpdateUserPasswordQuery = `UPDATE users SET password = $2 WHERE id = $1`
 	GetUserByIDQuery        = `SELECT * FROM users WHERE id = $1`
 	GetUserByEmailQuery     = `SELECT * FROM users WHERE email = $1`
+	DeleteUser              = `DELETE FROM users WHERE email = $1`
 )
