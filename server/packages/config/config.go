@@ -17,6 +17,7 @@ const (
 	JWT_KEY              = "JWT_KEY"
 	RUN_MIGRATION        = "RUN_MIGRATION"
 	POSTGRES_SERVER_HOST = "POSTGRES_SERVER_HOST"
+	ENVIRONEMT           = "ENV"
 )
 
 type ConfigType map[string]string
@@ -33,7 +34,13 @@ var Config = ConfigType{
 }
 
 func InitConfig() {
-	envFilePath, _ := filepath.Abs("../.env")
+	environment, exists := os.LookupEnv(ENVIRONEMT)
+	var envFilePath string
+	if exists && environment == "test" {
+		envFilePath, _ = filepath.Abs("../.env.test")
+	} else {
+		envFilePath, _ = filepath.Abs("../.env")
+	}
 	if err := godotenv.Load(envFilePath); err != nil {
 		log.WithField("reason", err.Error()).Fatal("No .env file found")
 	}

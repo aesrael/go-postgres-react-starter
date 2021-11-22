@@ -27,5 +27,7 @@ services:
   db:
     image: postgres:11.2-alpine
     restart: unless-stopped
+    volumes:
+      - ./create_test_db.sql:/docker-entrypoint-initdb.d/create_test_db.sql
     ports:
       - '5432:5432'
