@@ -1,11 +1,13 @@
 package api
 
 import (
+	"github.com/apex/log"
+	"github.com/gofiber/fiber/v2"
 	"goapp/packages/config"
 	"goapp/packages/db"
-
-	"github.com/apex/log"
 )
+
+var server *fiber.App
 
 func StartServer() {
 	conn, err := db.ConnectDB()
@@ -24,6 +26,18 @@ func StartServer() {
 		}
 	}
 
-	server := httpServer(conn)
-	server.Listen(port)
+	server = httpServer(conn)
+	serverErr := server.Listen(port)
+	if serverErr != nil {
+		log.WithField("reason", serverErr.Error()).Fatal("Server error")
+	}
+}
+
+func StopServer() {
+	if server != nil {
+		err := server.Shutdown()
+		if err != nil {
+			log.WithField("reason", err.Error()).Fatal("Shutdown server error")
+		}
+	}
 }
